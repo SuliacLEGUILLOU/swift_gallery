@@ -16,8 +16,8 @@ class CustomCell: UICollectionViewCell {
     var item: String? {
         didSet {
             let url: URL = URL(string: item!)!
+            self.indicator.startAnimating()
             DispatchQueue.global(qos: .userInitiated).async {
-                self.indicator.startAnimating()
                 do {
                     let imageData:Data
                     try imageData = Data(contentsOf: url)
@@ -37,7 +37,6 @@ class CustomCell: UICollectionViewCell {
     weak var delegate: ErrorDelegate?
     
     @objc func handleError() {
-        print("POPIN UP")
         self.delegate?.loadingError()
     }
     

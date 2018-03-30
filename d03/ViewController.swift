@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    let scrollViewController = ScrollView()
     private let reuseId = "myid"
     let images:[String] = [
         "https://apod.nasa.gov/apod/image/1803/NGC247_70mosSchedler1024.jpg",
@@ -56,6 +57,11 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.scrollViewController.item = images[indexPath.item]
+        navigationController?.pushViewController(self.scrollViewController, animated: true)
     }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScrollView: UIViewController{
+class ScrollView: UIViewController {
     
     let scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -16,13 +16,48 @@ class ScrollView: UIViewController{
         return sv
     }()
     
+    var item: String? {
+        didSet {
+            print("Printing \(item!)")
+            let url: URL = URL(string: item!)!
+            let imageData:Data
+            do {
+                try imageData = Data(contentsOf: url)
+                self.imageView.image = UIImage(data: imageData)
+            } catch {
+                print("Error \(error)")
+            }
+            
+        }
+    }
+    
+    
+    
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        var imageView: UIImageView?
-        var image: UIImage?
+        self.title = "Detail"
+        view.addSubview(scrollView)
+        view.addSubview(imageView)
         
-        //addSubview(scrollView)
+        scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        
+        imageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        
+        scrollView.contentSize = (imageView.frame.size)
+        scrollView.maximumZoomScale = 100
+        scrollView.minimumZoomScale = 0.3
+        view.backgroundColor = .black
     }
 }
