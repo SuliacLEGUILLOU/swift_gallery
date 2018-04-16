@@ -13,6 +13,7 @@ class ScrollView: UIViewController {
     let scrollView: UIScrollView = {
         let sv = UIScrollView()
         
+        sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
     }()
     
